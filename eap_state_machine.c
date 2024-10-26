@@ -342,21 +342,6 @@ static RESULT trans_to_failure(ETH_EAP_FRAME* frame) {
  */
 RESULT switch_to_state(EAP_STATE state, ETH_EAP_FRAME* frame) {
     int i;
-    
-    PR_INFO("PRIV 结构体信息:");
-    PR_INFO("state_last_count: %d", PRIV->state_last_count);
-    PR_INFO("auth_round: %d", PRIV->auth_round);
-    PR_INFO("fail_count: %d", PRIV->fail_count);
-    PR_INFO("state_alarm_id: %d", PRIV->state_alarm_id);
-    PR_INFO("local_mac: %02x:%02x:%02x:%02x:%02x:%02x", 
-        PRIV->local_mac[0], PRIV->local_mac[1], PRIV->local_mac[2],
-        PRIV->local_mac[3], PRIV->local_mac[4], PRIV->local_mac[5]);
-    PR_INFO("server_mac: %02x:%02x:%02x:%02x:%02x:%02x",
-        PRIV->server_mac[0], PRIV->server_mac[1], PRIV->server_mac[2],
-        PRIV->server_mac[3], PRIV->server_mac[4], PRIV->server_mac[5]);
-    PR_INFO("state: %d", PRIV->state);
-    PR_INFO("last_recv_frame: %p", (void*)PRIV->last_recv_frame);
-    PR_INFO("packet_builder: %p", (void*)PRIV->packet_builder);
 
     if (PRIV->state == state) {
         // PROG_CONFIG* _cfg = get_program_config();
