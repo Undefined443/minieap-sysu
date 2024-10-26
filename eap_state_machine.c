@@ -231,12 +231,6 @@ static RESULT state_mach_process_failure(ETH_EAP_FRAME* frame) {
  * and switch to next state (to send response)
  */
 void eap_state_machine_recv_handler(ETH_EAP_FRAME* frame) {
-    PR_INFO("收到新的帧:");
-    PR_INFO("源MAC地址: %02x:%02x:%02x:%02x:%02x:%02x",
-        frame->header->eth_hdr.src_mac[0], frame->header->eth_hdr.src_mac[1],
-        frame->header->eth_hdr.src_mac[2], frame->header->eth_hdr.src_mac[3],
-        frame->header->eth_hdr.src_mac[4], frame->header->eth_hdr.src_mac[5]);
-
     /* Keep a copy of the frame, since if_impl may not hold it */
     if (PRIV->last_recv_frame != NULL) {
         free_frame(&PRIV->last_recv_frame);
@@ -349,22 +343,22 @@ static RESULT trans_to_failure(ETH_EAP_FRAME* frame) {
 RESULT switch_to_state(EAP_STATE state, ETH_EAP_FRAME* frame) {
     int i;
 
-    if (PRIV->state == state) {
-        // PROG_CONFIG* _cfg = get_program_config();
-        // PRIV->state_last_count++;
-        // if (PRIV->state_last_count == _cfg->max_retries) {
-        //     PR_ERR("在 %d 状态已经停留了 %d 次，达到指定次数，正在退出……", PRIV->state, _cfg->max_retries);
-        //     exit(EXIT_FAILURE);
-        // }
-    } else {
-        /*
-         * Reset watchdog before calling trans func
-         * in case we need to cancel it there.
-         * e.g. after success
-         */
-        PRIV->state_last_count = 0;
-        reset_state_watchdog();
-    }
+    // if (PRIV->state == state) {
+    //     PROG_CONFIG* _cfg = get_program_config();
+    //     PRIV->state_last_count++;
+    //     if (PRIV->state_last_count == _cfg->max_retries) {
+    //         PR_ERR("在 %d 状态已经停留了 %d 次，达到指定次数，正在退出……", PRIV->state, _cfg->max_retries);
+    //         exit(EXIT_FAILURE);
+    //     }
+    // } else {
+    //     /*
+    //      * Reset watchdog before calling trans func
+    //      * in case we need to cancel it there.
+    //      * e.g. after success
+    //      */
+    //     PRIV->state_last_count = 0;
+    //     reset_state_watchdog();
+    // }
 
     for (i = 0; i < sizeof(g_transition_table) / sizeof(STATE_TRANSITION); ++i) {
         if (state == g_transition_table[i].state) {
