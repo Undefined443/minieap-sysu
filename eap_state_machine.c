@@ -231,6 +231,18 @@ static RESULT state_mach_process_failure(ETH_EAP_FRAME* frame) {
  * and switch to next state (to send response)
  */
 void eap_state_machine_recv_handler(ETH_EAP_FRAME* frame) {
+    PR_INFO("收到新的帧:");
+    PR_INFO("源MAC地址: %02x:%02x:%02x:%02x:%02x:%02x",
+        frame->header->eth_hdr.src_mac[0], frame->header->eth_hdr.src_mac[1],
+        frame->header->eth_hdr.src_mac[2], frame->header->eth_hdr.src_mac[3],
+        frame->header->eth_hdr.src_mac[4], frame->header->eth_hdr.src_mac[5]);
+    
+    PR_INFO("EAPOL类型: 0x%02x", frame->header->eapol_hdr.type[0]);
+    PR_INFO("EAP代码: 0x%02x", frame->header->eap_hdr.code[0]);
+    PR_INFO("EAP类型: 0x%02x", frame->header->eap_hdr.type[0]);
+    PR_INFO("EAP标识符: 0x%02x", frame->header->eap_hdr.id[0]);
+    PR_INFO("EAP长度: %d", ntohs(*(uint16_t*)frame->header->eap_hdr.len));
+
     /* Keep a copy of the frame, since if_impl may not hold it */
     if (PRIV->last_recv_frame != NULL) {
         free_frame(&PRIV->last_recv_frame);
