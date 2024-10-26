@@ -190,11 +190,14 @@ RESULT parse_rjv3_buf_to_prop_list(LIST_ELEMENT** list, uint8_t* buf, int buflen
     RJ_PROP* _tmp_prop = new_rjv3_prop();
     if (_tmp_prop == NULL) return FAILURE;
 
-    PR_DBG("解析数据包");
-    PR_DBG("buf 长度为 %d", buflen);
-    PR_DBG("bare 为 %d", bare);
-    PR_DBG("buf 内容为：");
-    PR_DUMP_HEX(buf, buflen);
+    PR_INFO("接收到的缓冲区内容：");
+    for (int i = 0; i < buflen; i++) {
+        if (i % 16 == 0) {
+            PR_INFO("\n%04x: ", i);
+        }
+        PR_INFO("%02x ", buf[i]);
+    }
+    PR_INFO("\n");
 
     if (bare) {
         while (_read_len < buflen) {
