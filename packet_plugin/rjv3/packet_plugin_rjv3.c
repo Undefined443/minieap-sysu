@@ -253,17 +253,17 @@ static RESULT rjv3_process_success(struct _packet_plugin* this, ETH_EAP_FRAME* f
         system(PRIV->dhcp_script);
     }
 
-    if (IS_FAIL(rjv3_process_result_prop(frame))) {
-        return FAILURE;
-    }
+    // if (IS_FAIL(rjv3_process_result_prop(frame))) {
+    //     return FAILURE;
+    // }
 
-    PR_INFO("正定时发送 Keep-Alive 报文以保持在线……");
-    schedule_alarm(1, rjv3_send_keepalive_timed, this);
+    // PR_INFO("正定时发送 Keep-Alive 报文以保持在线……");
+    // schedule_alarm(1, rjv3_send_keepalive_timed, this);
     return SUCCESS;
 }
 
 static RESULT rjv3_process_failure(PACKET_PLUGIN* this, ETH_EAP_FRAME* frame) {
-    rjv3_process_result_prop(frame);
+    // rjv3_process_result_prop(frame);
     rjv3_reset_state(this);
     return SUCCESS;
 }
