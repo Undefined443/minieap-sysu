@@ -438,29 +438,10 @@ static int rjv3_is_echokey_prop(void* unused, void* prop) {
     return 1;
 }
 
+// 不适合 SYSU
 RESULT rjv3_process_result_prop(ETH_EAP_FRAME* frame) {
     LIST_ELEMENT* _srv_msg = NULL;
     RJ_PROP* _msg = NULL;
-
-    PR_INFO("接收到的帧内容：");
-    PR_INFO("实际长度: %d", frame->actual_len);
-    PR_INFO("EAPOL 类型: 0x%02x", frame->header->eapol_hdr.type[0]);
-    
-    if (frame->header->eapol_hdr.type[0] == EAP_PACKET) {
-        PR_INFO("EAP 代码: %d", frame->header->eap_hdr.code[0]);
-        PR_INFO("EAP 标识符: %d", frame->header->eap_hdr.id[0]);
-        uint16_t eap_len = ntohs(*(uint16_t*)frame->header->eap_hdr.len);
-        PR_INFO("EAP 长度: %d", eap_len);
-    }
-    
-    PR_INFO("帧内容:");
-    for (int i = 0; i < frame->actual_len; i++) {
-        if (i % 16 == 0) {
-            PR_INFO("\n%04x: ", i);
-        }
-        PR_INFO("%02x ", frame->content[i]);
-    }
-    PR_INFO("\n");
 
     /* Success frames does not have EAP_HEADER.type,
      * and do not use EAP_HEADER.len since it once betrayed us
@@ -524,7 +505,7 @@ void rjv3_start_secondary_auth(void* vthis) {
     if (IS_FAIL(rjv3_get_dhcp_lease(this, &_tmp_dhcp_lease))) {
         PRIV->dhcp_count++;
         if (PRIV->dhcp_count > PRIV->max_dhcp_count) {
-            rjv3_process_result_prop(PRIV->duplicated_packet); // Loads of texts
+            // rjv3_process_result_prop(PRIV->duplicated_packet); // Loads of texts
             free_frame(&PRIV->duplicated_packet); // Duplicated in process_success
             schedule_alarm(1, rjv3_send_keepalive_timed, this);
             PR_ERR("无法获取 IPv4 地址等信息，将不会进行第二次认证而直接开始心跳");
