@@ -236,12 +236,6 @@ void eap_state_machine_recv_handler(ETH_EAP_FRAME* frame) {
         frame->header->eth_hdr.src_mac[0], frame->header->eth_hdr.src_mac[1],
         frame->header->eth_hdr.src_mac[2], frame->header->eth_hdr.src_mac[3],
         frame->header->eth_hdr.src_mac[4], frame->header->eth_hdr.src_mac[5]);
-    
-    PR_INFO("EAPOL类型: 0x%02x", frame->header->eapol_hdr.type[0]);
-    PR_INFO("EAP代码: 0x%02x", frame->header->eap_hdr.code[0]);
-    PR_INFO("EAP类型: 0x%02x", frame->header->eap_hdr.type[0]);
-    PR_INFO("EAP标识符: 0x%02x", frame->header->eap_hdr.id[0]);
-    PR_INFO("EAP长度: %d", ntohs(*(uint16_t*)frame->header->eap_hdr.len));
 
     /* Keep a copy of the frame, since if_impl may not hold it */
     if (PRIV->last_recv_frame != NULL) {
@@ -362,7 +356,6 @@ RESULT switch_to_state(EAP_STATE state, ETH_EAP_FRAME* frame) {
         //     PR_ERR("在 %d 状态已经停留了 %d 次，达到指定次数，正在退出……", PRIV->state, _cfg->max_retries);
         //     exit(EXIT_FAILURE);
         // }
-        reset_state_watchdog();
     } else {
         /*
          * Reset watchdog before calling trans func
