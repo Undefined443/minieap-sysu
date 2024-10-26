@@ -190,6 +190,15 @@ RESULT parse_rjv3_buf_to_prop_list(LIST_ELEMENT** list, uint8_t* buf, int buflen
     RJ_PROP* _tmp_prop = new_rjv3_prop();
     if (_tmp_prop == NULL) return FAILURE;
 
+    PR_DBG("解析数据包");
+    PR_DBG("buf 长度为 %d", buflen);
+    PR_DBG("bare 为 %d", bare);
+    PR_DBG("buf 内容为：");
+    for (int i = 0; i < buflen; i++) {
+        PR_DBG("%02hhx ", buf[i]);
+    }
+    PR_DBG("");
+
     if (bare) {
         while (_read_len < buflen) {
             if (_read_len + sizeof(RJ_PROP_HEADER2) > buflen) {
