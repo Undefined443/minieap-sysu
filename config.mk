@@ -30,7 +30,7 @@ CUSTOM_LDFLAGS :=
 CUSTOM_LIBS :=
 
 # Example for cross-compiling
-# CC := arm-brcm-linux-uclibcgnueabi-gcc
+CC := aarch64-openwrt-linux-musl-gcc-12.3.0
 # ENABLE_ICONV := true
 # CUSTOM_CFLAGS += -I/home/me/libiconv-1.14/include
 # CUSTOM_LIBS += /home/me/arm/libiconv.a
