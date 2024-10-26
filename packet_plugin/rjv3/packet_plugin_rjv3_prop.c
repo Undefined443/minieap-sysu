@@ -194,10 +194,7 @@ RESULT parse_rjv3_buf_to_prop_list(LIST_ELEMENT** list, uint8_t* buf, int buflen
     PR_DBG("buf 长度为 %d", buflen);
     PR_DBG("bare 为 %d", bare);
     PR_DBG("buf 内容为：");
-    for (int i = 0; i < buflen; i++) {
-        PR_DBG("%02hhx ", buf[i]);
-    }
-    PR_DBG("");
+    PR_DUMP_HEX(buf, buflen);
 
     if (bare) {
         while (_read_len < buflen) {

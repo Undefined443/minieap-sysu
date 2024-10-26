@@ -442,6 +442,26 @@ RESULT rjv3_process_result_prop(ETH_EAP_FRAME* frame) {
     LIST_ELEMENT* _srv_msg = NULL;
     RJ_PROP* _msg = NULL;
 
+    PR_INFO("接收到的帧内容：");
+    PR_INFO("实际长度: %d", frame->actual_len);
+    PR_INFO("EAPOL 类型: 0x%02x", frame->header->eapol_hdr.type[0]);
+    
+    if (frame->header->eapol_hdr.type[0] == EAP_PACKET) {
+        PR_INFO("EAP 代码: %d", frame->header->eap_hdr.code[0]);
+        PR_INFO("EAP 标识符: %d", frame->header->eap_hdr.id[0]);
+        uint16_t eap_len = ntohs(*(uint16_t*)frame->header->eap_hdr.len);
+        PR_INFO("EAP 长度: %d", eap_len);
+    }
+    
+    PR_INFO("帧内容:");
+    for (int i = 0; i < frame->actual_len; i++) {
+        if (i % 16 == 0) {
+            PR_INFO("\n%04x: ", i);
+        }
+        PR_INFO("%02x ", frame->content[i]);
+    }
+    PR_INFO("\n");
+
     /* Success frames does not have EAP_HEADER.type,
      * and do not use EAP_HEADER.len since it once betrayed us
      */
