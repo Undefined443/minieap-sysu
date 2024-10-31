@@ -375,7 +375,7 @@ RESULT rjv3_append_priv(struct _packet_plugin* this, ETH_EAP_FRAME* frame) {
      */
     /*
         struct _size_field {
-            RJ_PROP_HEADER1 header1; // TODO Different in 2nd packet
+            RJ_PROP_HEADER1 header1; // TODO: Different in 2nd packet
             uint8_t whole_trailer_len[2]; // First 0x1a prop to end
             <other 0x1a fields follow>
         }
@@ -438,7 +438,6 @@ static int rjv3_is_echokey_prop(void* unused, void* prop) {
     return 1;
 }
 
-// 不适合 SYSU
 RESULT rjv3_process_result_prop(ETH_EAP_FRAME* frame) {
     LIST_ELEMENT* _srv_msg = NULL;
     RJ_PROP* _msg = NULL;
@@ -505,7 +504,7 @@ void rjv3_start_secondary_auth(void* vthis) {
     if (IS_FAIL(rjv3_get_dhcp_lease(this, &_tmp_dhcp_lease))) {
         PRIV->dhcp_count++;
         if (PRIV->dhcp_count > PRIV->max_dhcp_count) {
-            // rjv3_process_result_prop(PRIV->duplicated_packet); // Loads of texts
+            rjv3_process_result_prop(PRIV->duplicated_packet); // Loads of texts
             free_frame(&PRIV->duplicated_packet); // Duplicated in process_success
             schedule_alarm(1, rjv3_send_keepalive_timed, this);
             PR_ERR("无法获取 IPv4 地址等信息，将不会进行第二次认证而直接开始心跳");

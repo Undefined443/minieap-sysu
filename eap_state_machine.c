@@ -341,8 +341,6 @@ static RESULT trans_to_failure(ETH_EAP_FRAME* frame) {
  * this watchdog in transition function if needed.
  */
 RESULT switch_to_state(EAP_STATE state, ETH_EAP_FRAME* frame) {
-    int i;
-
     // if (PRIV->state == state) {
     //     PROG_CONFIG* _cfg = get_program_config();
     //     PRIV->state_last_count++;
@@ -360,7 +358,7 @@ RESULT switch_to_state(EAP_STATE state, ETH_EAP_FRAME* frame) {
     //     reset_state_watchdog();
     // }
 
-    for (i = 0; i < sizeof(g_transition_table) / sizeof(STATE_TRANSITION); ++i) {
+    for (int i = 0; i < sizeof(g_transition_table) / sizeof(STATE_TRANSITION); ++i) {
         if (state == g_transition_table[i].state) {
             if (IS_FAIL(g_transition_table[i].trans_func(frame))) {
                 exit(EXIT_FAILURE);

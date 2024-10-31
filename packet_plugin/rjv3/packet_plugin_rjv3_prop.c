@@ -184,7 +184,6 @@ static inline int rjv3_prop_length_field_ok(RJ_PROP *prop) {
     return 1;
 }
 
-// 也许不适用于 SYSU ？
 RESULT parse_rjv3_buf_to_prop_list(LIST_ELEMENT** list, uint8_t* buf, int buflen, int bare /* buf_has_header1 ? */) {
     int _read_len = 0, _content_len = 0;
     uint8_t _magic[] = {0x00, 0x00, 0x13, 0x11};

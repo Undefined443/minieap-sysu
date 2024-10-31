@@ -112,7 +112,7 @@ RESULT sockraw_start_capture(struct _if_impl* this) {
     frame.actual_len = 0;
     frame.buffer_len = FRAME_BUF_SIZE;
     frame.content = buf;
-    // TODO will ctrl-c break recv first or call signal handler first?
+    // TODO: will ctrl-c break recv first or call signal handler first?
     while ((recvlen = recv(PRIV->sockfd, (void*)buf, 1512, 0)) > 0
                 && PRIV->stop_flag == 0) {
         frame.actual_len = recvlen;
