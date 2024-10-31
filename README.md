@@ -12,3 +12,9 @@
 2. 克隆源码。
 3. 修改 `config.mk`，将其中的 `CC` 修改为 Toolchain 中 GCC 编译器的路径。
 4. 使用 `make` 编译。
+
+## 运行
+
+```sh
+./minieap -u <username> -p <password> -n <nic>
+```
